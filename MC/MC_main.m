@@ -1,3 +1,7 @@
+clear all
+close all
+clc
+
 %% INPUT PARAMETERS 
 % Market parameteres
 r = 0.2
@@ -10,19 +14,26 @@ Stike = 100
 % Model parameters
 sigma = 0.4
 
-% Discretization parameters 
+% Numerical parameters 
 Nsim = 1e7 
 
-%%  Undelying simulation 
+%% BUILDING BLOCKS SIMULATION 
+Z = randn(Nsim,1); 
 
-ST = simulate_ST_BS(r, S0, T, Strike, sigma, Nsim, seed=0);% if path independent
-%S = simulate pathblabla % if path dependent 
 
-%% Simulate discounted payoff 
+%% MODEL FUNCTIONS 
+simulate_ST = @(n, seed) simulate_ST_BS(r, S0, T, Strike, sigma, n, seed);
+simulate_prices = @(ST) prices_EU_CALL(ST,Strike);
 
-discounted_payoff = exp(-r*T)*payoff_EU_Call(ST, Strike)
+% simulate_prices_AV = @d
+
+
+%% UNDERLYING SIMULATION  
+ST = simulate_ST(Nsim,0);
+
+%% SIMULATE DISCOUNTED PAYOFF
+simPrice = simulate_prices(ST)
 
 %% Price evaluation 
-
 Price = normfit(discounted_payoff) 
 
