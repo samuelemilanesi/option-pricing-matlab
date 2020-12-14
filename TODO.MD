@@ -2,44 +2,44 @@
 ├── 1_BS
 │   ├── AMERICAN
 │   │   ├── FFT
-│   │   ├── MC
+│   │   ├── MC      [✓]
 │   │   └── PIDE
 │   ├── ASIAN
 │   │   ├── FFT
-│   │   ├── MC
+│   │   ├── MC      [✓] 
 │   │   └── PIDE
 │   ├── BARRIER
 │   │   ├── FFT
-│   │   ├── MC
+│   │   ├── MC      [✓] 
 │   │   └── PIDE
 │   ├── EU
 │   │   ├── FFT
-│   │   ├── MC
+|   |   ├── MC      [✓]
 │   │   └── PIDE
 │   └── LOOKBACK
 │       ├── FFT
-│       ├── MC
+│       ├── MC      [✓] 
 │       └── PIDE
 ├── 2_MERTON
 │   ├── AMERICAN
 │   │   ├── FFT
-│   │   ├── MC
+│   │   ├── MC  
 │   │   └── PIDE
 │   ├── ASIAN
 │   │   ├── FFT
-│   │   ├── MC
+│   │   ├── MC  
 │   │   └── PIDE
 │   ├── BARRIER
 │   │   ├── FFT
-│   │   ├── MC
+│   │   ├── MC  
 │   │   └── PIDE
 │   ├── EU
 │   │   ├── FFT
-│   │   ├── MC
+│   │   ├── MC  
 │   │   └── PIDE
 │   └── LOOKBACK
 │       ├── FFT
-│       ├── MC
+│       ├── MC  
 │       └── PIDE
 ├── 3_KOU
 │   ├── AMERICAN
