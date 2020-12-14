@@ -11,4 +11,4 @@ Ogni volta che si completa una cartella foglia e ne si è verificata la corrette
 
 PUSHARE SOLO CARTELLE COMPLETE PLS
 
-
+Gruppo telegram: https://t.me/joinchat/BxQbPR2tj2_7V68ciUNjyg
