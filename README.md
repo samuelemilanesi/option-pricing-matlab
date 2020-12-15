@@ -11,5 +11,9 @@ Ogni volta che si completa una cartella foglia e ne si è verificata la corrette
 
 PUSHARE SOLO CARTELLE COMPLETE PLS
 
+<<<<<<< HEAD
 
 Telegram channel: https://t.me/joinchat/BxQbPR2tj2_7V68ciUNjyg
+=======
+Gruppo telegram: https://t.me/joinchat/BxQbPR2tj2_7V68ciUNjyg
+>>>>>>> b9d80dc5d72b5eb3cec9aee4c5911c9d01588665
