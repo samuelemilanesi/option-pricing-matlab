@@ -3,7 +3,7 @@
 │   ├── AMERICAN
 │   │   ├── FFT
 │   │   ├── MC      [✓]
-│   │   └── PIDE
+│   │   └── PIDE    [✓]
 │   ├── ASIAN
 │   │   ├── FFT
 │   │   ├── MC      [✓] 
@@ -11,11 +11,11 @@
 │   ├── BARRIER
 │   │   ├── FFT
 │   │   ├── MC      [✓] 
-│   │   └── PIDE
+│   │   └── PIDE    [✓]
 │   ├── EU
 │   │   ├── FFT
 |   |   ├── MC      [✓]
-│   │   └── PIDE
+│   │   └── PIDE    [✓]
 │   └── LOOKBACK
 │       ├── FFT
 │       ├── MC      [✓] 
