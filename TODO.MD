@@ -22,6 +22,7 @@
 │       ├── MC      [✓] 
 │       └── PIDE
 ├── 2_MERTON
+│   ├── CALIBRATION 
 │   ├── AMERICAN
 │   │   ├── FFT
 │   │   ├── MC  
@@ -32,11 +33,11 @@
 │   │   └── PIDE
 │   ├── BARRIER
 │   │   ├── FFT
-│   │   ├── MC  
+│   │   ├── MC      [✓]  
 │   │   └── PIDE
 │   ├── EU
 │   │   ├── FFT
-│   │   ├── MC  
+│   │   ├── MC      [✓] 
 │   │   └── PIDE
 │   └── LOOKBACK
 │       ├── FFT
