@@ -5,14 +5,14 @@
 
 %% Parameters
 % Market parameters
-r = 0.0367;             % riskfree interest rate 
-S0 = 100;               % spot price
+r = 0.01;               % riskfree interest rate 
+S0 = 100;            % spot price
 % Model parameters
-sigma = 0.17801;        % BM vol
-p = 0.4;                % prob of positive jump
-lambdap = 4;            % pos jump intensity
-lambdam = 2;            % neg jump intensity
-lambdaK = 0.2;          % n jumps intensity
+sigma = 0.3;         % standard deviation 
+p = 0.5;             % pos jump prob
+lambdaK = 2;         % jump time intensity
+lambdap = 15;
+lambdam = 18;
 % Contract parameters
 T = 1;                  % maturity
 Strike = [S0; S0*0.9];                 % strike
