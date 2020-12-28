@@ -29,10 +29,10 @@
 │   │   └── PIDE
 │   ├── ASIAN
 │   │   ├── FFT
-│   │   ├── MC  
+│   │   ├── MC      [✓]
 │   │   └── PIDE
 │   ├── BARRIER
-│   │   ├── FFT
+│   │   ├── FFT     [✓]
 │   │   ├── MC      [✓]  
 │   │   └── PIDE
 │   ├── EU
@@ -41,10 +41,10 @@
 │   │   └── PIDE
 │   └── LOOKBACK
 │       ├── FFT
-│       ├── MC  
+│       ├── MC      
 │       └── PIDE
 ├── 3_KOU
-│   ├── CALIBRATION 
+│   ├── CALIBRATION [✓]
 │   ├── AMERICAN
 │   │   ├── FFT
 │   │   ├── MC
@@ -58,7 +58,7 @@
 │   │   ├── MC
 │   │   └── PIDE
 │   ├── EU
-│   │   ├── FFT
+│   │   ├── FFT     [✓]
 │   │   ├── MC
 │   │   └── PIDE
 │   └── LOOKBACK

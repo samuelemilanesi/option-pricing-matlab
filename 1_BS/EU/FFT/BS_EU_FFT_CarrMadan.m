@@ -11,7 +11,7 @@ S0 = 218.75;            % spot price
 sigma = 0.2516;         % standard deviation 
 % Contract parameters% logstrike grid
 T = 1;                  % maturity
-Strike = S0;            % strike in which to evaluate the option
+Strike = [S0,S0*0.9];            % strike in which to evaluate the option
 
 par = struct('S0',S0,'r',r,'TTM',T,'sigma',sigma);
 
