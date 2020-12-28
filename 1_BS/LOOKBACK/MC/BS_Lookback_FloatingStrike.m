@@ -27,5 +27,5 @@ S = BS_simulate(S0, r, sigma, T, Nsim, M);   % simulates Nsim path of M steps in
 DiscPayoff = disc_payoff_fun(S);
 
 %% Compute call price and asymptotic CI 
-disp("Lookback floating strike call option price via plain MC:")
+disp("Lookback floating strike call option price via AV MC:")
 [barrier_DO_price, ~, barrier_DO_CI_price] = normfit(DiscPayoff)

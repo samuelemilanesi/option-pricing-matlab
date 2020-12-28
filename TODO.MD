@@ -44,6 +44,7 @@
 │       ├── MC  
 │       └── PIDE
 ├── 3_KOU
+│   ├── CALIBRATION 
 │   ├── AMERICAN
 │   │   ├── FFT
 │   │   ├── MC
@@ -65,6 +66,7 @@
 │       ├── MC
 │       └── PIDE
 ├── 4_NIG
+│   ├── CALIBRATION 
 │   ├── AMERICAN
 │   │   ├── FFT
 │   │   ├── MC
@@ -86,6 +88,7 @@
 │       ├── MC
 │       └── PIDE
 ├── 5_VG
+│   ├── CALIBRATION 
 │   ├── AMERICAN
 │   │   ├── FFT
 │   │   ├── MC
@@ -107,6 +110,7 @@
 │       ├── MC
 │       └── PIDE
 ├── 6_ExtVG
+│   ├── CALIBRATION 
 │   ├── AMERICAN
 │   │   ├── FFT
 │   │   ├── MC
@@ -128,6 +132,7 @@
 │       ├── MC
 │       └── PIDE
 ├── 7_ExtNIG
+│   ├── CALIBRATION 
 │   ├── AMERICAN
 │   │   ├── FFT
 │   │   ├── MC
@@ -149,6 +154,7 @@
 │       ├── MC
 │       └── PIDE
 ├── 8_Heston
+│   ├── CALIBRATION 
 │   ├── AMERICAN
 │   │   ├── FFT
 │   │   ├── MC
