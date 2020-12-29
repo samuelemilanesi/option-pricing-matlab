@@ -25,20 +25,20 @@
 │   ├── CALIBRATION 
 │   ├── AMERICAN
 │   │   ├── FFT
-│   │   ├── MC  
-│   │   └── PIDE
+│   │   ├── MC      [✓]
+│   │   └── PIDE    [✓]
 │   ├── ASIAN
 │   │   ├── FFT
 │   │   ├── MC      [✓]
 │   │   └── PIDE
 │   ├── BARRIER
-│   │   ├── FFT     [✓]
+│   │   ├── FFT    
 │   │   ├── MC      [✓]  
-│   │   └── PIDE
+│   │   └── PIDE    [✓]
 │   ├── EU
-│   │   ├── FFT
+│   │   ├── FFT     [✓]
 │   │   ├── MC      [✓] 
-│   │   └── PIDE
+│   │   └── PIDE    [✓]
 │   └── LOOKBACK
 │       ├── FFT
 │       ├── MC      
@@ -47,24 +47,24 @@
 │   ├── CALIBRATION [✓]
 │   ├── AMERICAN
 │   │   ├── FFT
-│   │   ├── MC
-│   │   └── PIDE
+│   │   ├── MC      [✓]
+│   │   └── PIDE    [✓]
 │   ├── ASIAN
 │   │   ├── FFT
-│   │   ├── MC
+│   │   ├── MC      [✓]
 │   │   └── PIDE
 │   ├── BARRIER
 │   │   ├── FFT
-│   │   ├── MC
-│   │   └── PIDE
+│   │   ├── MC      [✓]
+│   │   └── PIDE    [✓]
 │   ├── EU
 │   │   ├── FFT     [✓]
-│   │   ├── MC
-│   │   └── PIDE
+│   │   ├── MC      [✓]
+│   │   └── PIDE    [✓]
 │   └── LOOKBACK
 │       ├── FFT
-│       ├── MC
-│       └── PIDE
+│       ├── MC      [✓]
+│       └── PIDE    
 ├── 4_NIG
 │   ├── CALIBRATION 
 │   ├── AMERICAN
