@@ -1,5 +1,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Price Barrier D&O Call option under Kou model using MC
+% Price a Lookback Floating Strike Call option under Kou model 
+% using plain MC 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 clear; close all; clc;
 
@@ -16,8 +17,9 @@ lambdaK = 3;            % n jumps intensity
 % Contract parameters
 T = 1;                  % maturity
 K = S0;                 % strike
-L = 0.6;                % barrier
 M = round(12*T);        % monthly monitoring
+disc_payoff_fun = @(S) exp(-r*T).*max(S(:,end)-min(S,[],2),0);     % disc payoff function. S(i,:) = i-th simulation of an underlying PATH 
+
 % Discretization parameter
 Nsim = 1e6;             % number of MC simulations 
 
@@ -27,8 +29,8 @@ par = struct('S0',S0,'r',r,'TTM',T,'sigma',sigma,'p',p,'lambdap',lambdap,'lambda
 % Simulate the underlying at time T
 [S,ST] = Kou_simulate_asset(par,Nsim,M);
 %% Compute the discounted payoff
-DiscPayoff = exp(-r * T) * max(ST - K, 0).*(min(S,[],2)>L);
+DiscPayoff = disc_payoff_fun(S);
 
 %% Compute call price and asymptotic CI 
-disp("Kou Model - Barrier Down and Out Call option price via plain MC:")
-[DO_call_price, ~, DO_call_CI_price] = normfit(DiscPayoff)
+disp("Kou Model - Lookback floating strike call option price via plain MC:")
+[lb_floating_call_price, ~, lb_floating_call_price_CI] = normfit(DiscPayoff)

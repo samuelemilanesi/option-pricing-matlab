@@ -1,6 +1,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Price Barrier D&O Call option under Kou model using MC
-% with Antithetic Variance Reduction
+% Price Asian Arithmetic Average Call option under Kou model 
+% using plain MC 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 clear; close all; clc;
 
@@ -17,8 +17,9 @@ lambdaK = 3;            % n jumps intensity
 % Contract parameters
 T = 1;                  % maturity
 K = S0;                 % strike
-L = 0.6;                % barrier
 M = round(12*T);        % monthly monitoring
+disc_payoff_fun = @(S) exp(-r*T).*max(mean(S,2)-K,0);     % disc payoff function. S(i,:) = i-th simulation of an underlying PATH 
+
 % Discretization parameter
 Nsim = 1e6;             % number of MC simulations 
 
@@ -26,11 +27,10 @@ par = struct('S0',S0,'r',r,'TTM',T,'sigma',sigma,'p',p,'lambdap',lambdap,'lambda
 
 %% Simulate Underlying Asset
 % Simulate the underlying at time T
-[S,SAV,ST,STAV] = Kou_simulate_asset_AV(par,Nsim,M);
+[S,ST] = Kou_simulate_asset(par,Nsim,M);
 %% Compute the discounted payoff
-DiscPayoff = exp(-r * T) * max(ST - K, 0).*(min(S,[],2)>L);
-DiscPayoffAV = exp(-r * T) * max(STAV - K, 0).*(min(SAV,[],2)>L);
+DiscPayoff = disc_payoff_fun(S);
 
 %% Compute call price and asymptotic CI 
-disp("Kou Model - Barrier Down and Out Call option price via MC with Antithetic Variance Reduction:")
-[DO_call_price_AV, ~, DO_call_CI_price_AV] = normfit( (DiscPayoff+DiscPayoffAV)/2 )
+disp("Kou Model - Asian Ar. Ave. call option price via plain MC:")
+[asian_call_price, ~, asian_call_CI_price] = normfit(DiscPayoff)

@@ -13,7 +13,6 @@ sigma = 0.2516;         % standard deviation
 % Contract parameters
 T = 1;                  % maturity
 K = S0;                 % strike
-D = 0.98*S0;            % barrier
 M = round(12*T);        % monthly monitoring
 disc_payoff_fun = @(S) exp(-r*T).*max(mean(S,2)-K,0);     % disc payoff function. S(i,:) = i-th simulation of an underlying PATH 
 
@@ -30,4 +29,4 @@ DiscPayoffAV = disc_payoff_fun(SAV);            % note: handle functions are per
 
 %% Compute call price and asymptotic CI 
 disp("Asian option price via MC with Antithetic Variance Reduction:")
-[barrier_DO_price, ~, barrier_DO_CI_price] = normfit((DiscPayoff+DiscPayoffAV)/2)
+[asian_call_price, ~, asian_call_price_CI] = normfit((DiscPayoff+DiscPayoffAV)/2)

@@ -1,5 +1,5 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Price an Asian Aritmetic Average Call option under B&S model 
+% Price an Asian Arithmetic Average Call option under B&S model 
 % using plain MC 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 clear; close all; clc;
@@ -13,7 +13,6 @@ sigma = 0.2516;         % standard deviation
 % Contract parameters
 T = 1;                  % maturity
 K = S0;                 % strike
-D = 0.98*S0;            % barrier
 M = round(12*T);          % monthly monitoring
 disc_payoff_fun = @(S) exp(-r*T).*max(mean(S,2)-K,0);     % disc payoff function. S(i,:) = i-th simulation of an underlying PATH 
 
@@ -29,4 +28,4 @@ DiscPayoff = disc_payoff_fun(S);
 
 %% Compute call price and asymptotic CI 
 disp("Asian Ar. Ave. call option price via plain MC:")
-[barrier_DO_price, ~, barrier_DO_CI_price] = normfit(DiscPayoff)
+[asian_call_price, ~,asian_call_price_CI] = normfit(DiscPayoff)
