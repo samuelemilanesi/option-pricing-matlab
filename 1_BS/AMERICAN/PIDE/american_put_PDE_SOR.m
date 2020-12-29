@@ -18,11 +18,11 @@ payoff = @(x) max(K-S0*exp(x),0);   % payoff function -- Put Option
 % Domain Boundaries 
 xmax =  (r - sigma^2/2)*T + 6*sigma*sqrt(T);
 xmin =  (r - sigma^2/2)*T - 6*sigma*sqrt(T);
-upper_boundary_condition = @(t) 0;            % v(xmax,t) for EU put
-lower_boundary_condition = @(t) K*exp(-r*t)-S0*exp(xmin);                                   % v(xmin,t) for EU put 
+upper_boundary_condition = @(t) 0;                                  % v(xmax,t) for EU put
+ower_boundary_condition = @(t) K*exp(-r*t)-S0*exp(xmin);            % v(xmin,t) for EU put 
 % Numerical schema parameters 
 M = 50; dt = T/M;                                                   % time grid
-N = 1000; dx = (xmax-xmin)/N; x_grid = linspace(xmin,xmax, N+1)';    % space grid
+N = 1000; dx = (xmax-xmin)/N; x_grid = linspace(xmin,xmax, N+1)';   % space grid
 theta = 0;    % 0.5 = Crank-Nicholson, 0 = Implicit Euler, 1 = Explicit Euler (not uncond stable!)
 % SOR params 
 tol=1e-4; maxiter=500; omega=1.5;
@@ -51,7 +51,6 @@ for j = (M-1):-1:0
     rhs = B*v;
     rhs(1) = lower_boundary_condition(T-j*dt);
     rhs(end) = upper_boundary_condition(T-j*dt);
-    %rhs(end) = rhs(end)+upper_boundary_condition(T-j*dt); % upper...=0 in put case
     %compute prices at time tj -- exploit SOR to solve the linear system
     % guess solution: v 
     for iter = 1:maxiter 
