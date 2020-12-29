@@ -17,7 +17,7 @@ lambdaK = 0.2;          % n jumps intensity
 T = 1;                  % maturity
 K = S0;                 % strike
 % Discretization parameter
-Nsim = 1e6;             % number of MC simulations 
+Nsim = 1e7;             % number of MC simulations 
 
 par = struct('S0',S0,'r',r,'TTM',T,'sigma',sigma,'mu',mu,'delta',delta,'lambdaK',lambdaK);
 
