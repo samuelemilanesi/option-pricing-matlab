@@ -1,30 +1,35 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Price an American put option under B&S model 
+% Price an American put option under Kou model 
 % using plain MC and Longstaff-Schwartz projection method
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 clear; close all; clc;
 
 %% Parameters
 % Market parameters
-r = 0.02;               % riskfree interest rate 
-S0 = 218.75;            % spot price
+r = 0.001;              % riskfree interest rate 
+S0 = 1;                 % spot price
 % Model parameters
-sigma = 0.4;            % standard deviation 
+sigma = 0.4;            % BM vol
+p = 0.5;                % jump vol
+lambdap = 5;            % pos jump intensity
+lambdam = 6;            % neg jump intensity
+lambdaK = 3;            % n jumps intensity
 % Contract parameters
 T = 1;                  % maturity
 K = S0;                 % strike
 M = round(12*T);        % monthly monitoring
 dt= T/M;
-payoff= @(S) max(K-S(:,end),0);     % disc payoff function. S(i,:) = i-th simulation of an underlying PATH 
+disc_payoff_fun = @(S) exp(-r*T).*max(mean(S,2)-K,0);     % disc payoff function. S(i,:) = i-th simulation of an underlying PATH 
+
+par = struct('S0',S0,'r',r,'TTM',T,'sigma',sigma,'p',p,'lambdap',lambdap,'lambdam',lambdam,'lambdaK',lambdaK);
 
 % Discretization parameter
 Nsim = 1e6;             % number of MC simulations 
-
 %% Underlying asset simulation
-S = BS_simulate(S0,r,sigma,T,Nsim,M);
+S = Kou_simulate_asset(par, Nsim,M);
 %% Longstaff-Schwartz
 ExerciseTime = M*ones(Nsim,1);
-Cashflow = payoff(S);
+Cashflow = disc_payoff_fun(S);
 for step=M-1:-1:1
     InMoney=find( S(:,step+1)<K );              % select only in-the-money simultion at time step+1
     Stemp=S(InMoney,step+1);
@@ -41,4 +46,4 @@ for step=M-1:-1:1
     Cashflow(EarlyExercise_index)=IV(EarlyExercise_inMoney_index);  % compute the cashflow of the exercise (i.e. the IV)
     ExerciseTime(EarlyExercise_index)=step;                         % save that the exercise time is `step`
 end
-[american_put_price,~,CI]=normfit( Cashflow.*exp(-r*dt*ExerciseTime) )
+[Kou_american_put_price,~,CI]=normfit( Cashflow.*exp(-r*dt*ExerciseTime) )
