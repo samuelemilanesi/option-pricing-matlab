@@ -1,6 +1,6 @@
 function V = char_exponent_Merton(v, par)
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    % Returns the characteristic exponent of logprices in BS model
+    % Returns the characteristic exponent of logprices in Merton model
     %   INPUT: - par = parameters structure{
     %                  - par.r = risk free rate
     %                  - par.sigma = BM vol 

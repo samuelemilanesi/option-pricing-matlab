@@ -1,6 +1,6 @@
-function V = char_exponent_Merton(v, par)
+function V = char_exponent_Kou(v, par)
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    % Returns the characteristic exponent of logprices in BS model
+    % Returns the characteristic exponent of logprices in Kou model
     %   INPUT: - par = parameters structure{
     %                  - par.sigma = BM vol 
     %                  - par.p = prob of positive jump
