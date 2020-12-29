@@ -1,5 +1,5 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Price European Call and Put and Options under Kou model
+% Price Barrier DO put option under Kou model
 % using PDE with theta method on LOG-PRICE transformation
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 clear all; close all; clc;
@@ -21,19 +21,19 @@ nu=@(y) lambdaK*(p*lambdap*exp(-lambdap*y).*(y>0)+(1-p)*lambdam*exp(-lambdam*abs
 % Contract 
 T = 1;                  % maturity
 K = S0;                 % strike
-payoff = @(x) max(S0*exp(x)-K,0);   % payoff function -- Call Option
+D = 80;                 % barrier
+payoff = @(x) max(K-S0*exp(x),0).*(S0*exp(x)>D);   % payoff function -- put DO Option
 
 % Domain Boundaries 
-%xmax =  (r - sigma^2/2)*T + 6*sigma*sqrt(T);
-%xmin =  (r - sigma^2/2)*T - 6*sigma*sqrt(T);
-xmax = log(3); xmin= log(0.2); 
+xmax = log(3); 
+xmin= log(D/S0);    % Down barrier condition
 
-upper_boundary_condition = @(t,x) S0*exp(x)-K*exp(-r*t);           % v(x,t) for x>xmax
-lower_boundary_condition = @(t,x) 0;                               % v(x,t) for x<xmin
+upper_boundary_condition = @(t,x) 0;           % v(x,t) for x>xmax
+lower_boundary_condition = @(t,x) 0;           % v(x,t) for x<xmin
 
 % Numerical schema parameters 
-M = 75; dt = T/M;                                                   % time grid
-N = 2000; dx = (xmax-xmin)/N; x_grid = linspace(xmin,xmax, N+1)';   % space grid
+M = 50; dt = T/M;                                                   % time grid
+N = 1000; dx = (xmax-xmin)/N; x_grid = linspace(xmin,xmax, N+1)';   % space grid
 theta = 0;    % 0.5 = Crank-Nicholson, 0 = Implicit Euler, 1 = Explicit Euler (not uncond stable!)
 
 %% Computing alpha, and truncating the integral
@@ -86,10 +86,5 @@ for j = (M-1):-1:0
     v = A\rhs;
 end
 
-fprintf('EU Vanilla prices under Kou model using PDE theta method with theta=%d and operator splitting for JD processes',theta)
-call_price= interp1(S0*exp(x_grid), v, S0, 'spline')
-
-%% Compute put price 
-put_parity = @(call_p) call_p - S0 + K*exp(-r*T);
-
-put_price = put_parity(call_price)
+fprintf('DO put prices under Kou model using PDE theta method with theta=%d and operator splitting for JD processes',theta)
+DO_put_price= interp1(S0*exp(x_grid), v, S0, 'spline')

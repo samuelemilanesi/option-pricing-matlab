@@ -20,7 +20,7 @@ D = 90;                 % barrier
 M = 52*T;               % weekly monitoring
 disc_payoff_fun = @(S) exp(-r*T).*max(S(:,end)-K,0).*(min(S,[],2)>D);     % disc payoff function. S(i,:) = i-th simulation of an underlying PATH 
 % Discretization parameter
-Nsim = 1e5;             % number of MC simulations 
+Nsim = 1e6;             % number of MC simulations 
 
 par = struct('S0',S0,'r',r,'TTM',T,'sigma',sigma,'mu',mu,'delta',delta,'lambdaK',lambdaK);
 

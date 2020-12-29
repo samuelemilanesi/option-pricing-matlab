@@ -1,32 +1,33 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Price European Call and Put and Options under Kou model
-% using PDE with theta method on LOG-PRICE transformation
+% Price Barrier D&O  and option under Merton model
+% using PIDE with theta method on LOG-PRICE transformation
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 clear all; close all; clc;
 
 %% Parameters
 % Market parameters
-r = 0.01;               % riskfree interest rate 
-S0 = 100;            % spot price
+r = 0.0367;             % riskfree interest rate 
+S0 = 100;               % spot price
 % Model parameters
-sigma = 0.3;         % standard deviation 
-p = 0.5;             % pos jump prob
-lambdaK = 2;         % jump time intensity
-lambdap = 15;
-lambdam = 18;
+sigma = 0.17801;        % BM vol
+delta = sqrt(0.4);      % jump vol
+mu    = 0.01;           % jump drift
+lambdaK = 0.2;          % n jumps intensity
+% Contract parameters
+T = 1;                  % maturity
+K = S0;                 % strike
+D = 90;                 % barrier
 
 % Levy measure
-nu=@(y) lambdaK*(p*lambdap*exp(-lambdap*y).*(y>0)+(1-p)*lambdam*exp(-lambdam*abs(y)).*(y<0)); 
+nu=@(y) lambdaK./(delta.*sqrt(2*pi)).*exp(-(y-mu).^2./(2*delta.^2));
 
 % Contract 
 T = 1;                  % maturity
 K = S0;                 % strike
-payoff = @(x) max(S0*exp(x)-K,0);   % payoff function -- Call Option
+payoff = @(x) max(S0*exp(x)-K,0).*(S0*exp(x)>D);   % payoff function -- DO Call Option
 
 % Domain Boundaries 
-%xmax =  (r - sigma^2/2)*T + 6*sigma*sqrt(T);
-%xmin =  (r - sigma^2/2)*T - 6*sigma*sqrt(T);
-xmax = log(3); xmin= log(0.2); 
+xmax = log(3); xmin= log(D/S0); 
 
 upper_boundary_condition = @(t,x) S0*exp(x)-K*exp(-r*t);           % v(x,t) for x>xmax
 lower_boundary_condition = @(t,x) 0;                               % v(x,t) for x<xmin
@@ -86,10 +87,6 @@ for j = (M-1):-1:0
     v = A\rhs;
 end
 
-fprintf('EU Vanilla prices under Kou model using PDE theta method with theta=%d and operator splitting for JD processes',theta)
+fprintf('EU Vanilla prices under Merton model using PDE theta method with theta=%d and operator splitting for JD processes',theta)
 call_price= interp1(S0*exp(x_grid), v, S0, 'spline')
 
-%% Compute put price 
-put_parity = @(call_p) call_p - S0 + K*exp(-r*T);
-
-put_price = put_parity(call_price)
