@@ -1,5 +1,5 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Price European Call and Put and Options under Kou model
+% Price a Barrier DO option under VG model
 % using PIDE for general Levy with theta method on LOG-PRICES.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 clear all; close all; clc;
@@ -16,7 +16,7 @@ A=theta/(sigma^2); B=sqrt(theta^2+2*sigma^2/kVG)/(sigma^2);
 % Contract parameters
 T = 1;                  % maturity
 K = S0;  % strike
-
+D = 0.9*S0;             % barrier
 par = struct('S0',S0,'r',r,'TTM',T,'sigma',sigma,'theta',theta,'kVG',kVG);
 
 % Levy measure
@@ -24,12 +24,12 @@ nu=@(y) 1./(kVG*abs(y)).*exp(A*y-B*abs(y));
 % Contract 
 T = 1;                  % maturity
 K = S0;                 % strike
-payoff = @(x) max(S0*exp(x)-K,0);   % payoff function -- Call Option
+payoff = @(x) max(S0*exp(x)-K,0).*(S0*exp(x)>D);   % payoff function -- Call Option
 
 % Domain Boundaries 
 %xmax =  (r - sigma^2/2)*T + 6*sigma*sqrt(T);
 %xmin =  (r - sigma^2/2)*T - 6*sigma*sqrt(T);
-xmax = log(3); xmin= log(0.2); 
+xmax = log(3); xmin= log(D/S0); 
 
 upper_boundary_condition = @(t,x) S0*exp(x)-K*exp(-r*t);           % v(x,t) for x>xmax
 lower_boundary_condition = @(t,x) 0;                               % v(x,t) for x<xmin
@@ -100,11 +100,7 @@ for j = (M-1):-1:0
     v = A\rhs;
 end
 
-fprintf('EU Vanilla prices under VG model using PIDE theta method with theta=%d and operator splitting for General Levy processes',theta)
-call_price= interp1(S0*exp(x_grid), v, S0, 'spline')
+fprintf('Barrier DO option under VG model using PIDE theta method with theta=%d and operator splitting for General Levy processes',theta)
+DO_call_price= interp1(S0*exp(x_grid), v, S0, 'spline')
 
-%% Compute put price 
-put_parity = @(call_p) call_p - S0 + K*exp(-r*T);
-
-put_price = put_parity(call_price)
 
