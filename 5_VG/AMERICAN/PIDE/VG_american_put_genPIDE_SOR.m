@@ -1,6 +1,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Price European Call and Put and Options under Kou model
-% using PIDE for general Levy with theta method on LOG-PRICES.
+% Price American Put option under VG model
+% using PDE with theta method on LOG-PRICE transformation
+% and SOR algorithm to solve the linear sistem.
+% General Lévy operator splitting. 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 clear all; close all; clc;
 
@@ -24,14 +26,12 @@ nu=@(y) 1./(kVG*abs(y)).*exp(A*y-B*abs(y));
 % Contract 
 T = 1;                  % maturity
 K = S0;                 % strike
-payoff = @(x) max(S0*exp(x)-K,0);   % payoff function -- Call Option
-
+payoff = @(x) max(K-S0*exp(x),0);   % payoff function -- Put Option
 % Domain Boundaries 
-xmax = log(3); xmin= log(0.2); 
+xmax = log(3); xmin= log(0.2);
 
-upper_boundary_condition = @(t,x) S0*exp(x)-K*exp(-r*t);           % v(x,t) for x>xmax
-lower_boundary_condition = @(t,x) 0;                               % v(x,t) for x<xmin
-
+upper_boundary_condition = @(t,x) 0;                       % v(x,t) for x>xmax
+lower_boundary_condition = @(t,x) K-S0*exp(x);            % v(x,t) for x<xmin
 % Numerical schema parameters 
 M = 50; dt = T/M;                                                   % time grid
 N = 1000; dx = (xmax-xmin)/N; x_grid = linspace(xmin,xmax, N+1)';   % space grid
@@ -52,7 +52,8 @@ else
     sigma=sqrt(trapz(ynodes,ynodes.^2.*nu(ynodes)));
     nu=@(y) nu(y).*(abs(y)>epsilon);
 end
-%% Truncate the integral
+
+%% Truncating the integral
 tol=1e-14;
 ymin=-0.1-epsilon;
 while nu(ymin)>tol
@@ -78,30 +79,49 @@ b_u = -theta*((r-sigma^2/2)/(2*dx)+sigma^2/(2*dx^2));     % coeff of v_{i+1,j+1}
 Bhat = spdiags([b_d*ones(N-1,1), b_m*ones(N-1,1), b_u*ones(N-1,1)], -1:1, N-1, N-1);
 B = sparse(N+1,N+1); B(2:N,2:N)=Bhat; clear Bhat;
 B(2,1)=b_d; B(end-1,end)=b_u; 
+
+% SOR params 
+tol=1e-6; maxiter=500; omega=1.5;
+
 %% Backward in time procedure
 v = payoff(x_grid);
 for j = (M-1):-1:0
-    % compute boundary conditions
+    % compute boundary conditions 
     lbc_old = @(x) lower_boundary_condition(T-(j+1)*dt, x);  
     ubc_old = @(x) upper_boundary_condition(T-(j+1)*dt, x);
     lbc = lower_boundary_condition(T-j*dt,xmin);  
     ubc = upper_boundary_condition(T-j*dt,xmax);
     % compute the integral
     I = GenLevy_integral(nu,x_grid,v,ynodes,lbc_old, ubc_old);
-
     % compute rhs and adjust boundary conditions
     rhs = B*v - I;
     rhs(1) = lbc;
     rhs(end) = ubc;    
-    %compute prices at time tj
-    v = A\rhs;
+
+    %compute prices at time tj -- exploit SOR to solve the linear system
+    % guess solution: v 
+    for iter = 1:maxiter 
+        v_old = v;          % next iteration guess is the previous result 
+        for i=1:length(v)
+            if i==1
+                iter_rhs = rhs(i)-A(i,i+1)*v_old(i+1);
+            elseif i==length(v)
+                iter_rhs = rhs(i)-A(i,i-1)*v(i-1);
+            else
+                iter_rhs = rhs(i)-A(i,i+1)*v_old(i+1)-A(i,i-1)*v(i-1);
+            end
+            v(i)=max( (1-omega)*v_old(i)+omega*iter_rhs/A(i,i), K-S0*exp(x_grid(i)) );
+        end
+        err=norm(v-v_old,'Inf');
+        if err<tol
+            break
+        end
+    end
+    [j, iter, err]
 end
 
-fprintf('EU Vanilla prices under VG model using PIDE theta method with theta=%d and operator splitting for General Levy processes',theta)
-call_price= interp1(S0*exp(x_grid), v, S0, 'spline')
-
-%% Compute put price 
-put_parity = @(call_p) call_p - S0 + K*exp(-r*T);
-
-put_price = put_parity(call_price)
-
+fprintf('American Put price under VG model using PIDE theta method with theta=%d and operator splitting for general Lévy but truncating small jumps',theta)
+VG_american_put_price= interp1(S0*exp(x_grid), v, S0, 'spline')
+plot(S0*exp(x_grid),v); title('Price'); xlabel('S - spot price');
+hold on
+plot(S0*exp(x_grid),max( K-S0*exp(x_grid),0))
