@@ -31,6 +31,7 @@ DiscPayoffAV = exp(-r * T) * max(STAV - K, 0);
 %% Compute call price and asymptotic CI 
 disp("Merton Model - EU Vanilla options price via plain MC:")
 [call_price, ~, call_CI_price] = normfit( (DiscPayoff+DiscPayoffAV)/2 )
+CI_len = call_CI_price(2)-call_CI_price(1)
 
 %% Compute put price and asymptotic CI via Call-Put Parity
 put_parity = @(call_p) call_p - S0 + K*exp(-r*T);

@@ -45,7 +45,7 @@ function [S,SAV,ST,STAV]=Merton_simulate_asset_AV(par,Nsim,M)
             for j=1:Njumps(i)
                 Zjump = randn;
                 X(i,t+1) = X(i,t+1)+ delta*Zjump + mu;
-                XAV(i,t+1) = XAV(i,t+1)+ delta*Zjump + mu;
+                XAV(i,t+1) = XAV(i,t+1)- delta*Zjump + mu;
             end
         end
     end
