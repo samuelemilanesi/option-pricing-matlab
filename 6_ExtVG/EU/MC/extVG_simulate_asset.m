@@ -1,7 +1,8 @@
-function [S,ST]=VG_simulate_asset(par,Nsim,M)
+function [S,ST]=extVG_simulate_asset(par,Nsim,M)
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     %   INPUT: - par = parameters structure{
-    %                  - par.sigma = conditional vol 
+    %                  - par.sigma = conditional vol
+    %                  - par.sigmaGBM = uncond GBM vol 
     %                  - par.theta = conditional part of the drift
     %                  - par.kVG   = param k
     %                  - par.S0 = underlying  spot price
@@ -19,13 +20,14 @@ function [S,ST]=VG_simulate_asset(par,Nsim,M)
     r = par.r;
     T = par.TTM;
     sigma = par.sigma;
+    sigmaGBM = par.sigmaGBM;
     theta = par.theta;
     kVG = par.kVG;
     dt = T/M;
     a = dt/kVG;
     
     %% Compute drift in Q-dynamics
-    psi = @(u) -1/kVG .* log(1+ 0.5*(u.^2.*sigma.^2.*kVG)-1i*theta.*kVG.*u);
+    psi = @(u) -u.^2*sigmaGBM^2/2 -log(1+ 0.5*(u.^2.*sigma.^2.*kVG)-1i*theta.*kVG.*u)./kVG;
     drift=r-psi(-1i); % risk neutral drift
    
     %% Simulation
@@ -33,8 +35,10 @@ function [S,ST]=VG_simulate_asset(par,Nsim,M)
     for i=1:M 
         % Sample the Gamma subordinator
         dSub = kVG*icdf('Gamma',rand(Nsim,1),a,1);
+        % Sample Gaussian extension
+        Zext = randn(Nsim,1);
         % Sample the process
-        X(:,i+1) = X(:,i)+drift*dt+theta*dSub+sigma*sqrt(dSub).*randn(Nsim,1);
+        X(:,i+1) = X(:,i)+drift*dt+theta*dSub+sigma*sqrt(dSub).*randn(Nsim,1) + sigmaGBM*sqrt(dt)*Zext;
     end
        
     S  = S0*exp(X);

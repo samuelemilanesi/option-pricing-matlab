@@ -1,9 +1,9 @@
-function [S,ST]=VG_simulate_asset(par,Nsim,M)
+function [S,SAV,ST,STAV]=VG_simulate_asset_AV(par,Nsim,M)
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     %   INPUT: - par = parameters structure{
-    %                  - par.sigma = conditional vol 
-    %                  - par.theta = conditional part of the drift
-    %                  - par.kVG   = param k
+    %                  - par.sigma 
+    %                  - par.theta 
+    %                  - par.kVG
     %                  - par.S0 = underlying  spot price
     %                  - par.r = risk free rate
     %                  - par.TTM = time to maturity
@@ -30,13 +30,17 @@ function [S,ST]=VG_simulate_asset(par,Nsim,M)
    
     %% Simulation
     X=zeros(Nsim,M+1); Z=randn(Nsim,M);
+    XAV=zeros(Nsim,M+1); 
     for i=1:M 
         % Sample the Gamma subordinator
         dSub = kVG*icdf('Gamma',rand(Nsim,1),a,1);
         % Sample the process
-        X(:,i+1) = X(:,i)+drift*dt+theta*dSub+sigma*sqrt(dSub).*randn(Nsim,1);
+        X(:,i+1) = X(:,i)+drift*dt+theta*dSub+sigma*sqrt(dSub).*Z(:,i);
+        XAV(:,i+1) = XAV(:,i)+drift*dt+theta*dSub-sigma*sqrt(dSub).*Z(:,i);
     end
        
     S  = S0*exp(X);
+    SAV  = S0*exp(XAV);
     ST = S(:,end);
+    STAV = SAV(:,end);
 end          
