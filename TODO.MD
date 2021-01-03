@@ -10,7 +10,7 @@
 │   │   ├── MC      [✓] 
 │   │   └── PIDE
 │   ├── BARRIER
-│   │   ├── FFT
+│   │   ├── FFT     [✓]
 │   │   ├── MC      [✓] 
 │   │   └── PIDE    [✓]
 │   ├── EU
@@ -32,7 +32,7 @@
 │   │   ├── MC      [✓]
 │   │   └── PIDE
 │   ├── BARRIER
-│   │   ├── FFT    
+│   │   ├── FFT     [✓]
 │   │   ├── MC      [✓]  
 │   │   └── PIDE    [✓]
 │   ├── EU
@@ -54,7 +54,7 @@
 │   │   ├── MC      [✓]
 │   │   └── PIDE
 │   ├── BARRIER
-│   │   ├── FFT
+│   │   ├── FFT     [✓]
 │   │   ├── MC      [✓]
 │   │   └── PIDE    [✓]
 │   ├── EU
@@ -91,20 +91,20 @@
 │   ├── CALIBRATION 
 │   ├── AMERICAN
 │   │   ├── FFT
-│   │   ├── MC
-│   │   └── PIDE
+│   │   ├── MC      [✓]
+│   │   └── PIDE    [✓]
 │   ├── ASIAN
 │   │   ├── FFT
-│   │   ├── MC
-│   │   └── PIDE
+│   │   ├── MC      [✓]
+│   │   └── PIDE    [✓]
 │   ├── BARRIER
-│   │   ├── FFT
-│   │   ├── MC
-│   │   └── PIDE
+│   │   ├── FFT     [✓]
+│   │   ├── MC      [✓]
+│   │   └── PIDE    [✓]
 │   ├── EU
-│   │   ├── FFT
-│   │   ├── MC
-│   │   └── PIDE
+│   │   ├── FFT     [✓]
+│   │   ├── MC      [✓]
+│   │   └── PIDE    [✓]
 │   └── LOOKBACK
 │       ├── FFT
 │       ├── MC
