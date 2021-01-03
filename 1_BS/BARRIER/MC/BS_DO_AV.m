@@ -18,7 +18,7 @@ M = round(12*T);        % monthly monitoring
 disc_payoff_fun = @(S) exp(-r*T).*max(S(:,end)-K,0).*(min(S,[],2)>D);     % disc payoff function. S(i,:) = i-th simulation of an underlying PATH 
 
 % Discretization parameter
-Nsim = 1e7;             % number of MC simulations 
+Nsim = 3e7;             % number of MC simulations 
 
 %% Simulate Underlying Asset
 % Simulate the underlying at time T
