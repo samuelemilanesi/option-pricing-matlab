@@ -120,13 +120,13 @@
 │   │   ├── MC
 │   │   └── PIDE
 │   ├── BARRIER
-│   │   ├── FFT
-│   │   ├── MC
-│   │   └── PIDE
+│   │   ├── FFT     [✓]
+│   │   ├── MC     
+│   │   └── PIDE   
 │   ├── EU
-│   │   ├── FFT
-│   │   ├── MC
-│   │   └── PIDE
+│   │   ├── FFT     [✓]
+│   │   ├── MC      [✓]
+│   │   └── PIDE    [✓]
 │   └── LOOKBACK
 │       ├── FFT
 │       ├── MC
@@ -168,8 +168,8 @@
 │   │   ├── MC
 │   │   └── PIDE
 │   ├── EU
-│   │   ├── FFT
-│   │   ├── MC
+│   │   ├── FFT     [✓]
+│   │   ├── MC      [✓]
 │   │   └── PIDE
 │   └── LOOKBACK
 │       ├── FFT
