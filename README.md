@@ -3,7 +3,8 @@
 Per ogni modello c'é una sottocartella con i contratti piú comuni, per ogni contratto i 3 metodi di implementazione.
 
 Il file TODO contiene la struttura delle cartelle e con segnato quali codici sono già stati implementati.
-** Mancano di sicuro alcune voci al TODO **, chi vuole aggiungere é il benvenuto.
+
+**Mancano di sicuro alcune voci al TODO**, chi vuole aggiungere é il benvenuto.
 
 Non per tutti i contratti si possano usare tutti e tre i metodi, per quelli per cui non si puó bona lí si cancella la cartella.
 
