@@ -1,4 +1,4 @@
-function [gaps, model_prices] =  VG_model_mkt_gap(par, x, Strikes, TTMs, mkt_prices);
+function [gaps, model_prices] =  fun_VG_model_mkt_gap(par, x, Strikes, TTMs, mkt_prices);
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     %   Returns a vector of gaps between VG model prices and mkt prices
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

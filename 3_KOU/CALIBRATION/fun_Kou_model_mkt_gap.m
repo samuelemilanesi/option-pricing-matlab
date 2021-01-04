@@ -1,4 +1,4 @@
-function [gaps, model_prices] =  Kou_model_mkt_gap(par, x, Strikes, TTMs, mkt_prices);
+function [gaps, model_prices] =  fun_Kou_model_mkt_gap(par, x, Strikes, TTMs, mkt_prices);
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     %   Returns a vector of gaps between Kou model prices and mkt prices
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
