@@ -1,4 +1,4 @@
-function [gaps, model_prices] =  fun_VG_model_mkt_gap(par, x, Strikes, TTMs, mkt_prices);
+function [gaps, model_prices] =  fun_extNIG_model_mkt_gap(par, x, Strikes, TTMs, mkt_prices);
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     %   Returns a vector of gaps between VG model prices and mkt prices
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -8,7 +8,8 @@ function [gaps, model_prices] =  fun_VG_model_mkt_gap(par, x, Strikes, TTMs, mkt
     % par struct
     par.sigma = x(1);
     par.theta = x(2);
-    par.kVG = x(3);
+    par.kNIG = x(3);
+    par.sigmaGBM = x(4);
     
     % calibration on call options
     model_prices = zeros(size(TTMs));

@@ -30,20 +30,20 @@ Strikes = S0*data(:,1);
 TTMs = data(:,2);
 
 % Market parameters and initial ansaz of model parameters 
-par = struct('S0',S0,'r',r,'TTM',0,'sigma',0.2,'theta',0.4,'kVG',0.2);
+par = struct('S0',S0,'r',r,'TTM',0,'sigma',0.2,'theta',0.4,'kNIG',0.2,'sigmaGBM',0.2);
 t=tic();
 
 %% RSS loss minimization 
-gaps = @(x) fun_VG_model_mkt_gap(par,x,Strikes, TTMs, mkt_prices);
+gaps = @(x) fun_extNIG_model_mkt_gap(par,x,Strikes, TTMs, mkt_prices);
 
 % Params optimization
 options = optimoptions('lsqnonlin','FunctionTolerance',1e-14,'OptimalityTolerance',1e-14,'StepTolerance',1e-20);
-opt_params = lsqnonlin(@(x) gaps(x), [-1,-1,-1],[0.0,0.,0.0001], [1 1 1], options)    
+opt_params = lsqnonlin(@(x) gaps(x), [-1,-1,-1,-1],[0.0,0.,0.0001,0.0001], [1 1 1 1], options)    
 toc(t)
 %% Error and plot
 figure
 plot(Strikes, mkt_prices,'+'); hold on
-[err_vect, model_prices] = fun_VG_model_mkt_gap(par,opt_params,Strikes, TTMs,mkt_prices);
+[err_vect, model_prices] = fun_extNIG_model_mkt_gap(par,opt_params,Strikes, TTMs,mkt_prices);
 Error = norm(err_vect)
 plot(Strikes, model_prices,'s'); 
 legend('Market price', 'VG price')
