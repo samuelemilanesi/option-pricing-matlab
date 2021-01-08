@@ -15,15 +15,13 @@ function F = charfunction(u,parameters,flag)
     case 3 % Kou
         F = exp(dt*char_exponent_Kou(u,parameters));
     case 4 % NIG
-        error('TO BE IMPLEMENTED')
+        F = exp(dt*char_exponent_NIG(u,parameters));
     case 5 % VG 
         F = exp(dt*char_exponent_VG(u,parameters));
     case 6 % ExtVG
         F = exp(dt*char_exponent_extVG(u,parameters));
     case 7 % ExtNIG
-        error('TO BE IMPLEMENTED')
-    case 8 % Heston 
-        error('TO BE IMPLEMENTED')
+        F = exp(dt*char_exponent_extNIG(u,parameters));
     end
     
     if flag==0
