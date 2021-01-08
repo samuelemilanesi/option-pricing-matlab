@@ -27,7 +27,7 @@ nu=@(y) C./abs(y).*exp(A*y).*besselk(1,B*abs(y));
 % Contract 
 T = 1;                  % maturity
 K = S0;                 % strike
- payoff = @(x) max(K-S0*exp(x),0);
+payoff = @(x) max(K-S0*exp(x),0);
 %payoff = @(x) max(S0*exp(x)-K,0);   % payoff function -- Put Option
 % Domain Boundaries 
 xmax = log(3); xmin= log(0.2);
