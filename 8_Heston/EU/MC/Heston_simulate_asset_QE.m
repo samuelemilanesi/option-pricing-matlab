@@ -8,7 +8,7 @@ function [S,ST]=Heston_simulate_asset(par,Nsim,M)
     %                  - par.kappa   = mean reversion speed
     %                  - par.rho     = correlation
     %                  - par.V0      = initial var
-    %                  - par.theta   = mean
+    %                  - par.theta   = long term mean
     %                  }
     %           - Nsim = number of simulations
     %           - M = number of time steps
@@ -20,7 +20,7 @@ function [S,ST]=Heston_simulate_asset(par,Nsim,M)
     epsilon = par.epsilon; % vol-of-vol
     k = par.kappa; % mean reversion speed
     rho = par.rho; % correlation
-    theta = par.theta; % mean 
+    theta = par.theta; % long term mean
     V0 = par.V0;
     T = par.TTM; 
     S0 = par.S0;
